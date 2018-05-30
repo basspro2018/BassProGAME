@@ -6,9 +6,12 @@ int Rod;
 int FishX;
 int FishY;
 int Tension;
-int index;
 int timer;
+int index;
+int time;
+int frames;
 int distance;
+int Fish;
 
 PImage[] Sp_ = new PImage[4];
 
@@ -33,6 +36,8 @@ PImage Rod4;
 PImage Gradient;
 PImage Arrow;
 PImage Boi;
+PImage RepF;
+PImage Bar;
 
 void setup() {
 
@@ -55,6 +60,8 @@ void setup() {
   Gradient = loadImage("Gradient.png");
   Arrow = loadImage("Arrow.png");
   Boi = loadImage("Boi.png");
+  Bar = loadImage("Bar.png");
+  RepF = loadImage("RepF.png");
 
   Sp_[0] = loadImage("Sp_0.png");
   Sp_[1] = loadImage("Sp_1.png");
@@ -64,6 +71,8 @@ void setup() {
   Rod = 2;
 
  Tension = 245;
+ 
+ Fish = 0;
 }
 
 void draw() {
@@ -93,7 +102,30 @@ void draw() {
   if (level == 1) {
     
     clear();
-  
+      
+    image(Lake, 0, 0, 1366, 768);
+    image(Boi, 678, 500, 10, 10);
+    image(Gradient, 50, 50, 400, 30);
+    image(Arrow, Tension, 50, 10, 30);
+    
+      //                              Coutdown
+    //Connects the Frames to the Time
+    frames++;
+    //Allows Coudown to follow the Frames per Second
+    if (frames > 30){
+      //Resets Frame Count Whenever Limit is Passed
+      frames = 0;
+      //Connects the Time to the Frames
+      //Increases time
+      time++;
+    
+    }
+    
+    if (time >= 4){
+      Fish = 1;
+    }
+    
+    if(Fish == 1){
     if ( Tension <= 245 && Tension >=50) {
      
         Tension -= 1.5;
@@ -103,15 +135,9 @@ void draw() {
         
         Tension += 1.5;
       }
-      
-      
-    image(Lake, 0, 0, 1366, 768);
-
-    image(Gradient, 50, 50, 400, 30);
-    image(Arrow, Tension, 50, 10, 30);
     
     //Makes each Sp_ image number assosiate itself with the index to be displayed
-  image(Sp_[index], 700, 500, 50,50);
+  image(Sp_[index], 690, 485, 30,30);
   
   //Increas timer
   timer++;
@@ -126,6 +152,7 @@ void draw() {
 
       index=0;
     }
+  }
   }
    
     if (Rod == 2) {
