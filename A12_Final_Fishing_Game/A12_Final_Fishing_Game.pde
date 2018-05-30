@@ -8,6 +8,7 @@ int FishY;
 int Tension;
 int index;
 int timer;
+int distance;
 
 PImage[] Sp_ = new PImage[4];
 
@@ -31,6 +32,7 @@ PImage Rod3;
 PImage Rod4;
 PImage Gradient;
 PImage Arrow;
+PImage Boi;
 
 void setup() {
 
@@ -52,6 +54,7 @@ void setup() {
   Rod4 = loadImage("Rod4.png");
   Gradient = loadImage("Gradient.png");
   Arrow = loadImage("Arrow.png");
+  Boi = loadImage("Boi.png");
 
   Sp_[0] = loadImage("Sp_0.png");
   Sp_[1] = loadImage("Sp_1.png");
@@ -93,12 +96,12 @@ void draw() {
   
     if ( Tension <= 245 && Tension >=50) {
      
-        Tension -= 5;
+        Tension -= 1.5;
       }
       
       if (Tension >= 246 && Tension <= 440){
         
-        Tension += 5;
+        Tension += 1.5;
       }
       
       
@@ -124,12 +127,7 @@ void draw() {
       index=0;
     }
   }
-    if (keyCode == LEFT && Rod >= 1) {
-      Rod--;
-    }
-    if (keyCode == RIGHT && Rod <= 3) {
-      Rod++;
-    }
+   
     if (Rod == 2) {
       image(Rod2, 658.5, 312);
     }
@@ -146,12 +144,21 @@ void draw() {
     if (Rod == 3) {
       image(Rod3, 688, 403);
     }
-    
-    if(keyCode == UP && Tension <= 440){
-      Tension += 10;
+  }
+}
+
+
+void keyPressed(){
+   if (keyCode == LEFT && Rod >= 1) {
+      Rod--;
+    }
+    if (keyCode == RIGHT && Rod <= 3) {
+      Rod++;
+    }
+     if(keyCode == UP && Tension <= 440){
+       Tension = Tension +10;
     }
     if(keyCode == DOWN && Tension >= 50){
-      Tension -= 10;
+      Tension = Tension -10;
     }
-  }
 }
