@@ -46,18 +46,18 @@ PImage Bar;
 PImage Snap;
 
 //music
-//import processing.sound.*;
+  import processing.sound.*;
 
-// SoundFile file;
+SoundFile file;
 //replace the sample.mp3 with your audio file name here
-//String audioName = "music.mp3";
-// String path;
+  String audioName = "music.mp3";
+String path;
 
 //Runs the Following once
 void setup() {
-  // path = sketchPath(audioName);
-  //  file = new SoundFile(this, path);
-  //   file.play();
+  path = sketchPath(audioName);
+  file = new SoundFile(this, path);
+  file.play();
 
   //Sets image to full screen
   //1366 x 768
@@ -93,15 +93,25 @@ void setup() {
 
   //Sets level to start as 0
   level = 0;
-  
+
   //Sets "Rod" variable to start as 2
   Rod = 2;
 
   //Sets "Tension" variable to start as 245
   Tension = 245;
 
-  //Seys "distance" variable to start as 250
+  //Sets "distance" variable to start as 250
   distance = 250;
+
+  //Sets "time" variable to start as 0
+  time = 0;
+
+  //Sets "Side" variable to start as 0
+  Side = 0;
+
+
+  //Sets "Fish" variable to start as 0
+  Fish = 0;
 }
 
 //Runs the following 60 times per second
@@ -122,7 +132,7 @@ void draw() {
     text("WELCOME TO BASS PRO 2018", 250, 100 );
     textSize(30);
     text("Use      and      to adjust the tension. Keep the tension arrow within the blue.", 100, 200);
-    text("Use      and      to adjust the direction. Keep your rod facing opposit to the fish.", 100, 300);
+    text("Use      and      to adjust the direction. Keep your rod facing opposite to the fish.", 100, 300);
     text("Before pulling using            make sure both requiorments are met in the above text.", 100, 400);
     textSize(45);
     text("Press Enter to Begin", 300, 600);
@@ -146,10 +156,8 @@ void draw() {
     image(Arrow, Tension, 50, 10, 30);
     image(Bar, 1300, 150, 25, 520);
     image(RepF, 1302, distance, 20, 15);
-    text(time, 400, 200);
-    text(Side, 500, 200);
-    text(Tension, 600,200);
-    //                              Cout
+
+    //                              Count
     //makes frames increase
     frames++;
     //Allows Cout to follow the Frames per Second
@@ -159,19 +167,19 @@ void draw() {
       //Increases time and Connects the Time to the Frames
       time++;
     }
-      //Resets time to 3 when it equals 5
-      if (time == 5) {
-        time = 3;
-      }
-      //If time equals 4 Side equals 600
-      if (time == 3) {
-        Side = 650;
-      }
-      //If time equals 3 Side equals 690
-      if(time >= 4){
-        Side = 690;
-      }
-    
+    //Resets time to 3 when it equals 5
+    if (time == 5) {
+      time = 3;
+    }
+    //If time equals 4 Side equals 600
+    if (time == 3) {
+      Side = 650;
+    }
+    //If time equals 3 Side equals 690
+    if (time >= 4) {
+      Side = 690;
+    }
+
     //If time is above 2 the fish is active
     if (time >= 3) {
       Fish = 1;
@@ -224,12 +232,14 @@ void draw() {
     }
 
     //End Game code if Tension gets to high
-    if (Tension <= 50 && Fish == 1) { 
+    if (Tension >= 440 && Fish == 1) { 
       //Clears code
       clear();
       //Creates text
       textSize(100);
-      text("The Line Broke", 350, 300);
+      text("The Fish Escaped", 350, 300);
+     
+      //                    Second count
       //Connects the Frames to the Time
       frames++;
       //Allows Coudown to follow the Frames per Second
@@ -240,6 +250,7 @@ void draw() {
         time2++;
       }
 
+      //Resets all to level 0 when time 2 is graiter than 2
       if (time2 >= 3) {
         //Clears code
         clear();
@@ -247,16 +258,17 @@ void draw() {
         setup();
       }
     }
-
-    if ((Tension >= 440 && Fish == 1)|| (distance <= 160)) {
+    //Losing code when fish gets to far away
+        if (distance <= 150 && Fish == 1) { 
+      //Clears code
       clear();
-      //Places text
+      //Creates text
       textSize(100);
       text("The Fish Escaped", 350, 300);
-
-      //Increase time
+      //                    Second count
+      //Connects the Frames to the Time
       frames++;
-      //Allows Count to follow the Frames per Second
+      //Allows Coudown to follow the Frames per Second
       if (frames > 30) {
         //Resets Frame Count Whenever Limit is Passed
         frames = 0;
@@ -264,7 +276,7 @@ void draw() {
         time2++;
       }
 
-      //Resets all to level 0
+      //Resets all to level 0 when time 2 is graiter than 2
       if (time2 >= 3) {
         //Clears code
         clear();
@@ -272,11 +284,43 @@ void draw() {
         setup();
       }
     }
+    //Losing code when Tension gets to low
+        if (Tension <= 50 && Fish == 1) { 
+      //Clears code
+      clear();
+      //Creates text
+      textSize(100);
+      text("The Line Broke", 350, 300);
+      //                    Second count
+      //Connects the Frames to the Time
+      frames++;
+      //Allows Coudown to follow the Frames per Second
+      if (frames > 30) {
+        //Resets Frame Count Whenever Limit is Passed
+        frames = 0;
+        //Increases time
+        time2++;
+      }
+
+      //Resets all to level 0 when time 2 is graiter than 2
+      if (time2 >= 3) {
+        //Clears code
+        clear();
+        //Plays code in setup
+        setup();
+      }
+    }
+
     //Winning screen
     if (distance >= 650) {
+      //Clears code
       clear();
+      //Places Golden Background
       background(#C6B61C);
+      //Places text
+      textSize(50);
       text("You Have Caught a Carp", 400, 150);
+      //Places Fish Image
       image(Fish1, 400, 300, 600, 350);
     }
   }
@@ -303,20 +347,23 @@ void keyPressed() {
   if (Fish == 1) {
     if ((Rod == 0 && Side == 690) || (Rod == 4 && Side == 650)) {
       // 32 = Spacebar
-      if (keyCode == 32 && (Tension >= 200)) {
-        if(Tension >= 246 && Tension <= 290){
-        distance += 50;
-        Tension -= 100;
+      if (keyCode == 32) {
+        //Increases disatance by 75 and decreases tension by 50
+        if (Tension >= 246 && Tension <= 290) {
+          distance += 75;
+          Tension -= 50;
         }
-        if(Tension >= 200 && Tension <= 245);
-        distance += 100;
-        Tension += 100;
+        //Increases disatance by 75 and tension by 50
+        if (Tension >= 200 && Tension <= 245) {
+          distance += 75;
+          Tension += 50;
+        }
       }
     }
     //Creates negative reponces to Tention and distance when these requiorments are met while the fish is active
-    if (keyCode == 32 &&((Rod >= 1 && Side == 690) || (Rod <= 3 && Side == 650)||((Tension <= 199 && Tension >= 51)||(Tension >= 291 && Tension <= 439)))) {
-      distance -= 50;
-      Tension += 50;
+    if (keyCode == 32 &&((Rod >= 1 && Side == 690) || (Rod <= 3 && Side == 650)||((Tension <= 199 && Tension >= 40)||(Tension >= 291 && Tension <= 450)))) {
+      distance -= 75;
+      Tension -= 75;
     }
   }
 }
