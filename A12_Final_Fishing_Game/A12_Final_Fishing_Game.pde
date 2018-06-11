@@ -46,11 +46,11 @@ PImage Bar;
 PImage Snap;
 
 //music
-  import processing.sound.*;
+import processing.sound.*;
 
 SoundFile file;
 //replace the sample.mp3 with your audio file name here
-  String audioName = "music.mp3";
+String audioName = "music.mp3";
 String path;
 
 //Runs the Following once
@@ -238,7 +238,7 @@ void draw() {
       //Creates text
       textSize(100);
       text("The Fish Escaped", 350, 300);
-     
+
       //                    Second count
       //Connects the Frames to the Time
       frames++;
@@ -259,7 +259,7 @@ void draw() {
       }
     }
     //Losing code when fish gets to far away
-        if (distance <= 150 && Fish == 1) { 
+    if (distance <= 150 && Fish == 1) { 
       //Clears code
       clear();
       //Creates text
@@ -285,7 +285,7 @@ void draw() {
       }
     }
     //Losing code when Tension gets to low
-        if (Tension <= 50 && Fish == 1) { 
+    if (Tension <= 50 && Fish == 1) { 
       //Clears code
       clear();
       //Creates text
